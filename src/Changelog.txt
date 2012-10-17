@@ -1,0 +1,105 @@
+Changelog
+Added - Config option to turn off the /q and change help to not list it as a shortcut.
+		Note: I installed this because Questioner for Towny conflicts with /q
+Added - Quests will send a message to a player when they damage, break, destroy, place, or kill.
+				Example: break a block and it will say Block Destroyed 1/10
+Added - You can now make kill quests with a players's name *Must be exact in capitalization.*
+Added - Should be able to use all creatures up to Minecraft 1.3.2
+Added - New Quest Type Shear for shearing sheep quests.
+Added - New Quest Type Fish for fishing.
+Added - New Quest Type Bucket_Fill for filling buckets.
+Added - New Quest Type Plant for planting seeds.
+Added - New Quest Type Till for tilling grass and dirt.
+Added - New Quest Type Switch for switching levers, buttons, wooden doors, and trap doors.
+Fixed - Gather, Block Break, Block Damage, and Block Place Quests now recognize durability of an item. *Should be able to use all items now.*
+Fixed - Quest info will no longer show more then what you need for a quest.
+				Example: Sheep Killed 20/10 will now show Sheep Killed 10/10 and no more.
+Fixed - Quests objectives now multiply with Quest Levels.
+Fixed - kill quests now recognize Slimes, Magmacubes, and EnderDragon
+
+ToDos:
+See about making it check for enchants on items or maybe try enchant events.
+Make rewards go by level.
+Add Enchantment
+Add Furnace
+Add Dye Wool
+
+
+Quest Formats:
+   0:
+      Type: Shear
+      Display_Name: 
+      Objective_ID: 
+      Amount: 
+    1:
+      Type: Gather
+      Item:
+        Item_ID: 
+        Display_Name: 
+        Amount: 
+        Durability: 
+    2:
+      Type: Block_Place
+      Display_Name:
+      Durability: 
+      Objective_ID: 
+      Amount: 
+    3:
+      Type: Block_Destroy
+      Display_Name: 
+      Durability:
+      Objective_ID: 
+      Amount: 
+    4:
+      Type: Block_Damage
+      Display_Name: 
+      Durability:
+      Objective_ID: 
+      Amount: 
+    5:
+      Type: Kill
+      Display_Name: 
+      Objective_ID: 
+      Amount: 
+    6:
+      Type: Fish
+      Display_Name: 
+      Objective_ID: (Can be fish or any creature like creeper, cow, skeleton, etc..)
+      Amount: 
+    7:
+      Type: Bucke_Fill
+      Display_Name: 
+      Objective_ID: (Can be milk, lava, and water)
+      Amount: 
+    8:
+      Type: Plant
+      Display_Name: 
+      Objective_ID: (Anything that can be planted in till soil) 
+      Amount:
+    9:
+      Type: Till
+      Display_Name: 
+      Objective_ID: till 
+      Amount:
+    10:
+      Type: Switch
+      Display_Name: 
+      Objective_ID: (Any switchable item like levers, wooden doors, stone buttons, trap doors) 
+      Amount:
+
+ Location setup, have to figure out how this works.
+ He didn't say much on this, maybe go near that point and as long as your in range your ok?
+      Type: Block_Damage
+      Display_Name: Log Punches
+      Objective_ID: 17
+      Amount: 10
+      Location:
+        Point:
+          World: world
+          X: 32
+          Y: 65
+          Z: 53
+        Give_Range:
+          X: 10
+          Y: 3
+          Z: 15

@@ -1,0 +1,62 @@
+name: uQuest
+main: hawox.uquest.UQuest
+version: 2.4.0
+author: Hawox,morganm,Croyd
+softdepend: [Vault]
+description: >
+             Heavily customizable quest plugin. Gets quests anywhere with a simple /uquest
+commands:
+  uquest:
+    description: All the quests commands
+    aliases: [quest, q]
+    permission: uQuest.CanQuest
+    permission-message: You do not have the permission for this command. **uQuest.CanQuest**
+    usage: |
+           Example: /uquest - shows all commands for uQuest.
+           /<command>
+  reloadquests:
+    permission: uQuest.admin
+    description: Reloads the quests from the quests file.
+  reloadquestconfig:
+    permission: uQuest.admin
+    description: Reloads the config file.
+permissions:
+    uQuest.*:
+        description: All uQuest commands.
+        default: op
+        children:
+            uQuest.CanQuest.*: true
+            uQuest.uQuest.admin: true
+    uQuest.CanQuest:
+        default: true
+        descriptioin: Can use the uQuest command.
+    uQuest.CanQuest.*:
+        description: Default uQuest commands.
+        children:
+            uQuest.CanQuest.give: true
+            uQuest.CanQuest.info: true
+            uQuest.CanQuest.stats: true
+            uQuest.CanQuest.done: true
+            uQuest.CanQuest.amount: true
+            uQuest.CanQuest.CanDropQuest: true
+    uQuest.CanQuest.give:
+        description: Gives random quest.
+        default: op
+    uQuest.CanQuest.info:
+        description: Gives info on current quest.
+        default: op
+    uQuest.CanQuest.stats:
+        description: Gives quester's stats.
+        default: op
+    uQuest.CanQuest.done:
+        description: Turn in current quest.
+        default: op
+    uQuest.CanQuest.amount:
+        description: Gives amount of quests.
+        default: op
+    uQuest.CanQuest.CanDropQuest:
+        description: Allows player to drop quests.
+        default: op
+    uQuest.admin:
+        description: Gives access to admin commands.
+        default: op
