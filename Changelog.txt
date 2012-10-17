@@ -25,7 +25,7 @@ Add Furnace
 Add Dye Wool
 
 
-Quest Formats:
+Objective Formats:
    0:
       Type: Shear
       Display_Name: 
@@ -86,20 +86,3 @@ Quest Formats:
       Display_Name: 
       Objective_ID: (Any switchable item like levers, wooden doors, stone buttons, trap doors) 
       Amount:
-
- Location setup, have to figure out how this works.
- He didn't say much on this, maybe go near that point and as long as your in range your ok?
-      Type: Block_Damage
-      Display_Name: Log Punches
-      Objective_ID: 17
-      Amount: 10
-      Location:
-        Point:
-          World: world
-          X: 32
-          Y: 65
-          Z: 53
-        Give_Range:
-          X: 10
-          Y: 3
-          Z: 15
