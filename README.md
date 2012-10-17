@@ -6,6 +6,10 @@ I have added a lot and done some changes, so decided not to fork it and instead 
 
 There will be a changelog.txt file with the changes and other notes.
 
+Also need to give credit to morganm for putting in vault support for Permissions and Economies.
+
+So Vault is required for Permissions and Economies.
+
 Original Bukkit Page:
 http://forums.bukkit.org/threads/fun-econ-dev-uquest-v1-03-overly-customizable-quest-system-cb-602.7092/page-13#post-186819
 
