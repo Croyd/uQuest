@@ -1,6 +1,6 @@
 I have taken uQuest and updated it for Bukkit 1.3.2 and added a lot of new features to it.
 I did this all for my server but wanted to share it with everyone.
-So I got Howax permission to post it.
+So I got Howax's permission to post it.
 
 I have added a lot and done some changes, so decided not to fork it and instead start this repository from scratch.
 
