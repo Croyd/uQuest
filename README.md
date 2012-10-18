@@ -11,6 +11,7 @@ Also need to give credit to morganm for putting in vault support for Permissions
 
 So Vault is required for Permissions and Economies.
 
+
 Vault Page:
 http://dev.bukkit.org/server-mods/vault/
 
