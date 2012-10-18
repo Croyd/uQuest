@@ -1,22 +1,35 @@
 # uQuest
+**Overly customizable quest system plugin for Bukkit by Hawox**
+
 I have taken uQuest and updated it for Bukkit 1.3.2 and added a lot of new features to it.
+
 I did this all for my server but wanted to share it with everyone.
-So I got Howax's permission to post it.
+
+So I got **Howax**'s permission to post it.
 
 I have added a lot and done some changes, so decided not to fork it and instead start this repository from scratch.
 
-There will be a changelog.txt file with the changes and other notes.
+Also need to give credit to **morganm** for putting in **Vault** support for Permissions and Economies.
 
-Also need to give credit to morganm for putting in vault support for Permissions and Economies.
+##Plugin Info
+[Commands & Permissions](https://github.com/Croyd/uQuest/wiki/Commands-&-Permissions)
 
-So Vault is required for Permissions and Economies.
+[Quest Examples](https://github.com/Croyd/uQuest/wiki/Quest-Examples)
 
+[Quest Formats Explained](https://github.com/Croyd/uQuest/wiki/Quest-Formats--Explained)
 
-Vault Page:
-http://dev.bukkit.org/server-mods/vault/
+[Changelog](https://github.com/Croyd/uQuest/wiki/Changelog)
 
-Original Bukkit Page:
-http://forums.bukkit.org/threads/fun-econ-dev-uquest-v1-03-overly-customizable-quest-system-cb-602.7092/page-13#post-186819
+[To Do's](https://github.com/Croyd/uQuest/wiki/To-Do%27s)
 
-Wiki:
-http://hawox.wikispaces.com/
+##Vault Dependency
+**Vault** is required if you want to use Permissions and an Economy but the plugin will run without it.
+
+Download **Vault** [here.](http://dev.bukkit.org/server-mods/vault/)
+
+##Original uQuest Links
+[uQuest Bukkit Page](http://forums.bukkit.org/threads/fun-econ-dev-uquest-v1-03-overly-customizable-quest-system-cb-602.7092/page-13#post-186819)
+
+[uQuest Wiki](http://hawox.wikispaces.com/)
+
+[uQuest GitHub](https://github.com/Hawox/uQuest)
