@@ -946,3 +946,31 @@
       Display_Name: Seeds Planted
       Objective_ID: 362
       Amount: 10
+65:
+  Name: I need an iron axe enchanted with Unbreaking II
+  Start_Info: Get to it!
+  Finish_Info: Thanks much!
+  Rewards:
+    Money: 3000
+  Objectives:
+    0:
+      Type: Enchant
+      Display_Name: Iron Axe
+      Objective_ID: Unbreaking
+      Level: 2
+      Amount: 1
+      Item_ID: 258
+66:
+  Name: I need an iron axe enchanted with Unbreaking II
+  Start_Info: Get to it!
+  Finish_Info: Thanks much!
+  Rewards:
+    Money: 3000
+  Objectives:
+    0:
+      Type: Enchant
+      Display_Name: Iron Helmet
+      Objective_ID: Aqua Affinity
+      Level: 1
+      Amount: 1
+      Item_ID: 306

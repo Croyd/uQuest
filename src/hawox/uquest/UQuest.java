@@ -3,6 +3,11 @@ package hawox.uquest;
 import hawox.uquest.commands.Cmd_reloadquestconfig;
 import hawox.uquest.commands.Cmd_reloadquests;
 import hawox.uquest.commands.Cmd_uquest;
+import hawox.uquest.listeners.QuestListener;
+import hawox.uquest.listeners.UQuestBlockListener;
+import hawox.uquest.listeners.UQuestEnchantListener;
+import hawox.uquest.listeners.UQuestEntityListener;
+import hawox.uquest.listeners.UQuestPlayerListener;
 import hawox.uquest.questclasses.LoadedQuest;
 import hawox.uquest.questclasses.QuestConverter;
 import hawox.uquest.questclasses.QuestLoader;
@@ -48,6 +53,7 @@ public class UQuest extends JavaPlugin {
 	private final UQuestPlayerListener playerListener = new UQuestPlayerListener(this);
 	private final UQuestBlockListener blockListener = new UQuestBlockListener(this);
 	private final UQuestEntityListener entityListener = new UQuestEntityListener(this);
+	private final UQuestEnchantListener enchantListener = new UQuestEnchantListener(this);
 
     private final QuestListener uQuestListener = new QuestListener();
     
@@ -252,7 +258,8 @@ public class UQuest extends JavaPlugin {
 		
 		pm.registerEvents(playerListener, this);
 		pm.registerEvents(blockListener, this);
-		pm.registerEvents(this.entityListener, this);
+		pm.registerEvents(entityListener, this);
+		pm.registerEvents(enchantListener, this);
 		
 		// turns out the custom events aren't even used anyway.  -morganm 3/3/11
 //		pm.registerEvents(this.uQuestListener, this);
@@ -510,19 +517,7 @@ public class UQuest extends JavaPlugin {
 		String theSlash = ChatColor.WHITE + "/";
 		String colorAmount;
 		String colorNeeded = ChatColor.GREEN + Integer.toString(needed);
-		String name = oname.toLowerCase();
-		if(name.contains("_") || name.contains(" ")){
-			String[] cName = null;
-			if(name.contains("_"))
-				cName = name.split("_");
-			if(name.contains(" "))
-				cName = name.split(" ");
-			String fName = cName[0].substring(0,1).toUpperCase() + cName[0].substring(1);
-			String sName = cName[1].substring(0,1).toUpperCase() + cName[1].substring(1);
-			name = fName + " " + sName;
-		} else {
-			name = name.substring(0,1).toUpperCase() + name.substring(1);
-		}
+		String name = UQuestUtils.formatName(oname.toLowerCase());
 		if(amount == needed) {
 			colorAmount = ChatColor.GREEN + Integer.toString(amount);
 		} else {

@@ -1,5 +1,8 @@
-package hawox.uquest;
+package hawox.uquest.listeners;
 
+import hawox.uquest.Quester;
+import hawox.uquest.UQuest;
+import hawox.uquest.UQuestUtils;
 import hawox.uquest.questclasses.LoadedQuest;
 import hawox.uquest.questclasses.Objective;
 
@@ -57,6 +60,7 @@ public class UQuestPlayerListener implements Listener {
     	}
     }
     //Hawox must have been planning something for this, removing till I know what.
+    //I'm thinking of using this to track boat and minecart rides *Croyd*
 /*    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent event){
     	Player player = event.getPlayer();
@@ -130,73 +134,77 @@ public class UQuestPlayerListener implements Listener {
             	ItemStack HeldItem = player.getItemInHand();
                 switch(action){
                 case RIGHT_CLICK_BLOCK:
-                	Block tBlock = piEvent.getClickedBlock();
-                    int blockid = tBlock.getType().getId();
-        			String objectiveName = Integer.toString(tBlock.getTypeId());
-        			//The wooden door item id is 324 but when it is placed it is 64.
-        			if(tBlock.getTypeId() == 64) {
-        				objectiveName = "324";
-        				blockid = 324;
-        			}
+                 	Block tBlock = piEvent.getClickedBlock();
+                    int blockid = UQuestUtils.checkBlock(tBlock);
+                    String objectiveName = Integer.toString(UQuestUtils.checkBlock(tBlock));
             		amountNeed = 0;
             		String itemname = "";
             		//For Tilling
             		if(loadedQuest.checkObjective(plugin, player.getLocation(), "till", "till")) {
             			int itemID = HeldItem.getTypeId();
             			if((blockid == 2 || blockid == 3) && (itemID == 290 || itemID == 291 || itemID == 292 || itemID == 293 || itemID == 294)) {
-            				if(blockid == 2) itemname = "Grass";
-                			if(blockid == 3) itemname = "Dirt";
+            				itemname = tBlock.getType().name();
             				amountNeed = loadedQuest.getObjectiveFromTypes("till", "till").getAmountNeeded()*questLevel;
         					if(quester.getTracker(plugin, "till") < amountNeed) {
         						quester.addToTracker(plugin, "till", 1);
-        						message = plugin.formatUpdateMessage("till", itemname, quester.getTracker(plugin, "till"), amountNeed);
+        						message = UQuestUtils.formatUpdateMessage("till", itemname, quester.getTracker(plugin, "till"), amountNeed);
         					}
             			}
             		}
             		//For Switching
             		if(loadedQuest.checkObjective(plugin, player.getLocation(), "switch", objectiveName)) {
-                		if(blockid == 69) itemname = "Lever";
-            			if(blockid == 77) itemname = "Button";
-    					if(blockid == 96) itemname = "Trap Door";
-    					if(blockid == 324) itemname = "Wooden Door";
+            			itemname = tBlock.getType().name();
             			amountNeed = loadedQuest.getObjectiveFromTypes("switch", objectiveName).getAmountNeeded()*questLevel;
     					if(quester.getTracker(plugin, objectiveName) < amountNeed) {
     						quester.addToTracker(plugin, objectiveName, 1);
-    						message =  plugin.formatUpdateMessage("switch", itemname, quester.getTracker(plugin, objectiveName), amountNeed);
+    						message =  UQuestUtils.formatUpdateMessage("switch", itemname, quester.getTracker(plugin, objectiveName), amountNeed);
     					}
             		}
             		//For Planting
             		if(loadedQuest.checkObjective(plugin, player.getLocation(), "plant", Integer.toString(HeldItem.getTypeId()))) {
-    					if(blockid == 60) {
+            			//Planting Seeds in soil
+            			if(blockid == 60) {
                 			objectiveName = Integer.toString(HeldItem.getTypeId());
         					amountNeed = loadedQuest.getObjectiveFromTypes("plant", objectiveName).getAmountNeeded()*questLevel;
         					itemname = HeldItem.getType().toString();
         					if(quester.getTracker(plugin, objectiveName) < amountNeed) {
         						quester.addToTracker(plugin, objectiveName, 1);
-        						message = plugin.formatUpdateMessage("plant", itemname, quester.getTracker(plugin, objectiveName), amountNeed);
+        						message = UQuestUtils.formatUpdateMessage("plant", itemname, quester.getTracker(plugin, objectiveName), amountNeed);
         					}
     					}
+            			//Planting Cocoa Beans on Jungle Wood
+    					if(HeldItem.getTypeId() == 351 && HeldItem.getDurability() == 3 && blockid == 17 && tBlock.getData() == 3) {
+                			objectiveName = Integer.toString(HeldItem.getTypeId());
+        					amountNeed = loadedQuest.getObjectiveFromTypes("plant", objectiveName).getAmountNeeded()*questLevel;
+        					itemname = "Cocoa Beans";
+        					if(quester.getTracker(plugin, objectiveName) < amountNeed) {
+        						quester.addToTracker(plugin, objectiveName, 1);
+        						message = UQuestUtils.formatUpdateMessage("plant", itemname, quester.getTracker(plugin, objectiveName), amountNeed);
+        					}    						
+    					}
+    					//Planting Mushrooms. *Probably needs more tweaking so it checks for the right blocks and conditions.*
+    					if(HeldItem.getTypeId() == 39 || HeldItem.getTypeId() == 40) {
+                			objectiveName = Integer.toString(HeldItem.getTypeId());
+        					amountNeed = loadedQuest.getObjectiveFromTypes("plant", objectiveName).getAmountNeeded()*questLevel;
+        					itemname = HeldItem.getType().toString();
+        					if(quester.getTracker(plugin, objectiveName) < amountNeed) {
+        						quester.addToTracker(plugin, objectiveName, 1);
+        						message = UQuestUtils.formatUpdateMessage("plant", itemname, quester.getTracker(plugin, objectiveName), amountNeed);
+        					}    						
+    					}    						
             		}
                 	break;
                 case LEFT_CLICK_BLOCK:
                 	tBlock = piEvent.getClickedBlock();
-                    blockid = tBlock.getType().getId();
-        			objectiveName = Integer.toString(tBlock.getTypeId());
-        			if(tBlock.getTypeId() == 64) {//For Wooden Door, item id is 324 but placed it is 64.
-        				objectiveName = "324";
-        				blockid = 324;
-        			}
+                    blockid = UQuestUtils.checkBlock(tBlock);
+        			objectiveName = Integer.toString(UQuestUtils.checkBlock(tBlock));
         			//For Switching
                     if(loadedQuest.checkObjective(plugin, player.getLocation(), "switch", objectiveName)) {
-                		itemname = "";
-                    	if(blockid == 69) itemname = "Lever";
-            			if(blockid == 77) itemname = "Button";
-    					if(blockid == 96) itemname = "Trap Door";
-    					if(blockid == 324) itemname = "Wooden Door";
+                    	itemname = tBlock.getType().name();
                 		amountNeed = loadedQuest.getObjectiveFromTypes("switch", objectiveName).getAmountNeeded()*questLevel;
                 		if(quester.getTracker(plugin, objectiveName) < amountNeed) {
     	    				quester.addToTracker(plugin, objectiveName, 1);
-        					message = plugin.formatUpdateMessage("switch", itemname, quester.getTracker(plugin, objectiveName), amountNeed);    					
+        					message = UQuestUtils.formatUpdateMessage("switch", itemname, quester.getTracker(plugin, objectiveName), amountNeed);    					
         				}             			
                     }
                     break;
@@ -204,7 +212,8 @@ public class UQuestPlayerListener implements Listener {
                 	break;
                 }                	
         		break;
-        	case "PlayerBucketFillEvent": //Filling Bucket
+            //Filling Lava Bucket
+        	case "PlayerBucketFillEvent":
         		PlayerBucketFillEvent pbfEvent = (PlayerBucketFillEvent) event;
         		Material mat = pbfEvent.getItemStack().getType();
     			int matId = mat.getId();
@@ -213,7 +222,7 @@ public class UQuestPlayerListener implements Listener {
 					amountNeed = loadedQuest.getObjectiveFromTypes("fillbucket", "water").getAmountNeeded()*questLevel;
 					if(quester.getTracker(plugin, "water") < amountNeed) {
 	    				quester.addToTracker(plugin, "water", 1);
-    					message =plugin.formatUpdateMessage("fillbucket", "Water", quester.getTracker(plugin, "water"), amountNeed);    					
+    					message = UQuestUtils.formatUpdateMessage("fillbucket", "Water", quester.getTracker(plugin, "water"), amountNeed);    					
     				} 
     			}
     			//Filling Lava Bucket
@@ -221,7 +230,7 @@ public class UQuestPlayerListener implements Listener {
 					amountNeed = loadedQuest.getObjectiveFromTypes("fillbucket", "lava").getAmountNeeded()*questLevel;
 					if(quester.getTracker(plugin, "lava") < amountNeed) {
 	    				quester.addToTracker(plugin, "lava", 1);
-    					message =plugin.formatUpdateMessage("fillbucket", "Lava", quester.getTracker(plugin, "lava"), amountNeed);    					
+    					message =UQuestUtils.formatUpdateMessage("fillbucket", "Lava", quester.getTracker(plugin, "lava"), amountNeed);    					
     				}  
     			}
     			//Filling Milk Bucket
@@ -229,7 +238,7 @@ public class UQuestPlayerListener implements Listener {
 					amountNeed = loadedQuest.getObjectiveFromTypes("fillbucket", "milk").getAmountNeeded()*questLevel;
 	    			if(quester.getTracker(plugin, "milk") < amountNeed) {
 	    				quester.addToTracker(plugin, "milk", 1);
-    					message = plugin.formatUpdateMessage("fillbucket", "Cow", quester.getTracker(plugin, "milk"), amountNeed);    					
+    					message = UQuestUtils.formatUpdateMessage("fillbucket", "Cow", quester.getTracker(plugin, "milk"), amountNeed);    					
     				} 
     			}
         		break;
@@ -242,7 +251,7 @@ public class UQuestPlayerListener implements Listener {
     	    			amountNeed = loadedQuest.getObjectiveFromTypes("fish", "fish").getAmountNeeded()*questLevel;
     	    			if(quester.getTracker(plugin, "fish") < amountNeed) {
     	    				quester.addToTracker(plugin, "fish", 1);
-        					message = plugin.formatUpdateMessage("fish", "fish", quester.getTracker(plugin, "fish"), amountNeed);    					
+        					message = UQuestUtils.formatUpdateMessage("fish", "fish", quester.getTracker(plugin, "fish"), amountNeed);    					
         				}
     	    		}    	    			
     	    		break;
@@ -252,7 +261,7 @@ public class UQuestPlayerListener implements Listener {
         	    		amountNeed = loadedQuest.getObjectiveFromTypes("fish", eName).getAmountNeeded()*questLevel;
     	    			if(quester.getTracker(plugin, eName) < amountNeed) {
     	    				quester.addToTracker(plugin, eName, 1);
-        					message = plugin.formatUpdateMessage("fish", eName, quester.getTracker(plugin, eName), amountNeed);    					
+        					message = UQuestUtils.formatUpdateMessage("fish", eName, quester.getTracker(plugin, eName), amountNeed);    					
     	    			}
     	    		}
     	    		break;
@@ -273,9 +282,9 @@ public class UQuestPlayerListener implements Listener {
     				amountNeed = loadedQuest.getObjectiveFromTypes("gather", objectiveName).getAmountNeeded()*questLevel;
     				if(amountHave < amountNeed && itemDur == (short)objective.getItemDurability() ) {
         				if((itemAmount+amountHave) >= amountNeed){
-        					message = plugin.formatUpdateMessage("gather", Material.getMaterial(itemID).name() , amountNeed, amountNeed);
+        					message = UQuestUtils.formatUpdateMessage("gather", Material.getMaterial(itemID).name() , amountNeed, amountNeed);
         				} else {
-        					message = plugin.formatUpdateMessage("gather", Material.getMaterial(itemID).name() , itemAmount+amountHave, amountNeed);
+        					message = UQuestUtils.formatUpdateMessage("gather", Material.getMaterial(itemID).name() , itemAmount+amountHave, amountNeed);
         				}
     				}
     			}
@@ -288,7 +297,7 @@ public class UQuestPlayerListener implements Listener {
     				int amountNeeded = loadedQuest.getObjectiveFromTypes("shear", entName).getAmountNeeded()*questLevel;
     				if(quester.getTracker(plugin, entName) < amountNeeded) { 
     					quester.addToTracker(plugin, entName, 1);
-    					message = plugin.formatUpdateMessage("shear", e.getName(), quester.getTracker(plugin, entName), amountNeeded);
+    					message = UQuestUtils.formatUpdateMessage("shear", e.getName(), quester.getTracker(plugin, entName), amountNeeded);
     				}
     			}
         		break;
@@ -300,27 +309,6 @@ public class UQuestPlayerListener implements Listener {
     		}
     	}
     }
-/*
-  
-
-    
-
-    
-    // Event handler for Enchanting Items *Croyd*
-    @EventHandler
-    public void onEnchantItemEvent(EnchantItemEvent event) {
-    	Player player = event.getEnchanter();
-    	Map<Enchantment, Integer> Test = event.getEnchantsToAdd();
-    	for (Map.Entry<Enchantment, Integer> e : Test.entrySet()) {
-    	    player.sendMessage(e.getKey().getName() + ": " + e.getValue());
-    	}
-    	String iName = event.getItem().getData().getItemType().toString();
-    	int iID = event.getItem().getTypeId();
-    	player.sendMessage(iName + " " + iID);
-    }
-    
-*/   
-    
 }
     
 /*

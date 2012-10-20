@@ -1,5 +1,8 @@
-package hawox.uquest;
+package hawox.uquest.listeners;
 
+import hawox.uquest.Quester;
+import hawox.uquest.UQuest;
+import hawox.uquest.UQuestUtils;
 import hawox.uquest.questclasses.LoadedQuest;
 
 import org.bukkit.entity.Arrow;
@@ -168,7 +171,7 @@ public class UQuestEntityListener implements Listener {
     	    					//Updates the quest with what is needed.
     	    					quester.addToTracker(plugin, creatureType, 1);
     	    					//Informs the player that they have killed an entity they needed and how many more they need.
-    	    					player.sendMessage(plugin.formatUpdateMessage("kill", eType.getName(), quester.getTracker(plugin, creatureType), amountNeeded));
+    	    					player.sendMessage(UQuestUtils.formatUpdateMessage("kill", eType.getName(), quester.getTracker(plugin, creatureType), amountNeeded));
     	    				}
     	    			}    					
     				}
@@ -217,7 +220,7 @@ Updated to only check off what is needed, to add quest level, and to message pla
     	    				int amountNeeded = loadedQuest.getObjectiveFromTypes("kill", creatureType).getAmountNeeded()*questLevel;
     	    				if(quester.getTracker(plugin, creatureType) < amountNeeded) {    	    				
     	    					quester.addToTracker(plugin, creatureType, 1);
-    	    					player.sendMessage(plugin.formatUpdateMessage("kill", eType.getName(), quester.getTracker(plugin, creatureType), amountNeeded));
+    	    					player.sendMessage(UQuestUtils.formatUpdateMessage("kill", eType.getName(), quester.getTracker(plugin, creatureType), amountNeeded));
     	    				}
     	    			}    					
     				}
@@ -296,13 +299,13 @@ Updated to only check off what is needed, to add quest level, and to message pla
 					int amountNeeded = loadedQuest.getObjectiveFromTypes("kill", "player").getAmountNeeded()*questLevel;
 					if( quester.getTracker(plugin, "player") < amountNeeded){
 						quester.addToTracker(plugin, "player", 1);
-						player.sendMessage(plugin.formatUpdateMessage("kill", damagedPlayer.getName(), quester.getTracker(plugin, "player"), amountNeeded));
+						player.sendMessage(UQuestUtils.formatUpdateMessage("kill", damagedPlayer.getName(), quester.getTracker(plugin, "player"), amountNeeded));
 					}
 				}else if(loadedQuest.checkObjective(plugin, player.getLocation(),"kill",damagedPlayer.getName())) {
 					int amountNeeded = loadedQuest.getObjectiveFromTypes("kill", damagedPlayer.getName()).getAmountNeeded()*questLevel;
 					if(quester.getTracker(plugin, damagedPlayer.getName()) <  amountNeeded) {
 						quester.addToTracker(plugin, damagedPlayer.getName(), 1);
-						player.sendMessage(plugin.formatUpdateMessage("kill", damagedPlayer.getName(), quester.getTracker(plugin, damagedPlayer.getName()), amountNeeded));	    					
+						player.sendMessage(UQuestUtils.formatUpdateMessage("kill", damagedPlayer.getName(), quester.getTracker(plugin, damagedPlayer.getName()), amountNeeded));	    					
 					}
     			}
 //    			}

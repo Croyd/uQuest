@@ -8,6 +8,7 @@ import hawox.uquest.UQuest;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 //import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +19,8 @@ public class Objective{
 	String objectiveName;		 //this will be the itemID/monster name based on the type of quest it is.
 	int itemDurability;
 	int amountNeeded;			 //Amount of needed. Whether it be items, monster kills, etc
+	int level;
+	int itemID;
 	//So we don't have to store a plugin object here (just in case I ever need to serialize these) locations will be strings.
 	String locationNeeded;	 //The point where the quest needs to be
 	String locationGiveRange;  //How far from the point players can be in any direction.
@@ -52,7 +55,27 @@ public class Objective{
 		this.locationNeeded = point;
 		this.locationGiveRange = give;
 	}
-	
+	/*
+	 * Type: Enchant
+	 * Display_Name:
+	 * Objective_ID:
+	 * Level:
+	 * Amount:
+	 * Item_ID:
+	 */
+	//Added for Enchant type. *Croyd*
+	public Objective(String type, String displayName, String objectiveName, int level, int amountNeeded, int itemID, String point, String give) {
+
+		this.type = type;
+		this.displayname = displayName;
+		this.objectiveName = objectiveName;
+		this.level = level;
+		this.amountNeeded = amountNeeded;
+		this.itemID = itemID;
+		this.locationNeeded = point;
+		this.locationGiveRange = give;		
+		
+	}
 	//Used for quests that require items
 	public Objective(String type, String displayName, ItemStack itemNeeded, String point, String give){
 		
@@ -73,8 +96,10 @@ public class Objective{
 		this.displayname = old.getDisplayname();
 		this.itemNeeded = old.itemNeeded;
 		this.objectiveName = old.objectiveName;
+		this.level = old.level;
 		this.itemDurability = old.itemDurability;
 		this.amountNeeded = old.amountNeeded;
+		this.itemID = old.itemID;
 		this.locationNeeded = old.locationNeeded;
 		this.locationGiveRange = old.locationGiveRange;
 	}
@@ -137,7 +162,12 @@ public class Objective{
 	 */
 	public void done(Player player){
 		if(this.itemNeeded != null)
-			removeItem(player, this.itemNeeded.getTypeId(), this.itemNeeded.getDurability(), this.amountNeeded);
+			removeItem(player, this.itemNeeded.getTypeId(), this.itemNeeded.getDurability(), this.amountNeeded, null);
+		if(this.itemID != 0) {
+			short durability = 0;
+			removeItem(player, this.itemID, durability, this.amountNeeded, this.objectiveName);
+		}
+			
 	}
 
 	public void scaleToLevel(int factor){
@@ -157,27 +187,37 @@ public class Objective{
 				howMuch = this.amountNeeded;
 			}
 		}
-		if( (this.type.equalsIgnoreCase("blockdestroy")) || this.type.equalsIgnoreCase("blockdamage") || this.type.equalsIgnoreCase("blockplace") ||
-				this.type.equalsIgnoreCase("kill") || this.type.equalsIgnoreCase("fish") ||
-				this.type.equalsIgnoreCase("fillbucket") || this.type.equalsIgnoreCase("move") ||
-				this.type.equalsIgnoreCase("shear") || this.type.equalsIgnoreCase("till") ||
-				this.type.equalsIgnoreCase("switch") || this.type.equalsIgnoreCase("plant")){
+		if( (this.type.equalsIgnoreCase("blockdestroy")) || this.type.equalsIgnoreCase("blockdamage") ||
+				this.type.equalsIgnoreCase("blockplace") || this.type.equalsIgnoreCase("kill") ||
+				this.type.equalsIgnoreCase("fish") || this.type.equalsIgnoreCase("fillbucket") ||
+				this.type.equalsIgnoreCase("move") || this.type.equalsIgnoreCase("shear") ||
+				this.type.equalsIgnoreCase("till") || this.type.equalsIgnoreCase("switch") ||
+				this.type.equalsIgnoreCase("plant") || this.type.equalsIgnoreCase("enchant")){
 			howMuch = questTracker;
 		}
 		//Objectives that are complete will look different than non completed objectives
+		String[] levels = {"I","II","III","IV","V"}; //Added to make Enchant levels look right. *Croyd*
 		if(howMuch >= this.amountNeeded){
 			//done
-			returnMe = "   " + ChatColor.YELLOW + Integer.toString(howMuch) + "/" + this.amountNeeded + " " + this.displayname;
-		}else{
-			returnMe = "   " + ChatColor.AQUA + Integer.toString(howMuch)  + ChatColor.WHITE + "/" + this.amountNeeded + " " + ChatColor.GRAY + this.displayname;
-			//location
-			if(this.locationNeeded != null){
-				//world:x:y:z
-				String[] loc = this.locationNeeded.split(":");
-				String[] give = this.locationGiveRange.split(":");
-				//TODO Find a better way to output this...
-				returnMe += "\n\n     @: " + loc[0] + " " + loc[1] + "," + loc[2] + "," + loc[3] + " Radius: " + give[0] + "," + give[1] + "," + give[2];
+			if(this.type.equalsIgnoreCase("enchant")) { //Added to format enchant info. *Croyd*
+				returnMe = "   " + ChatColor.YELLOW + Integer.toString(howMuch) + "/" + this.amountNeeded + " " + this.displayname + " with " + this.objectiveName + " "+ levels[this.level-1];
+			} else {
+				returnMe = "   " + ChatColor.YELLOW + Integer.toString(howMuch) + "/" + this.amountNeeded + " " + this.displayname;	
 			}
+		}else{
+			if(this.type.equalsIgnoreCase("enchant")) { //Added to format enchant info. *Croyd*
+				returnMe = "   " + ChatColor.AQUA + Integer.toString(howMuch)  + ChatColor.WHITE + "/" + this.amountNeeded + " " + ChatColor.GRAY + this.displayname + " enchanted with " + this.objectiveName + " "+ levels[this.level-1];
+			} else {
+				returnMe = "   " + ChatColor.AQUA + Integer.toString(howMuch)  + ChatColor.WHITE + "/" + this.amountNeeded + " " + ChatColor.GRAY + this.displayname;
+			}
+			//location
+		}
+		if(this.locationNeeded != null){
+			//world:x:y:z
+			String[] loc = this.locationNeeded.split(":");
+			String[] give = this.locationGiveRange.split(":");
+			//TODO Find a better way to output this...
+			returnMe += "\n\n     @: " + loc[0] + " " + loc[1] + "," + loc[2] + "," + loc[3] + " Radius: " + give[0] + "," + give[1] + "," + give[2];
 		}
 		return returnMe;
 
@@ -198,7 +238,7 @@ public class Objective{
 		if(this.type.equalsIgnoreCase("shear")){
 			//It's a shear mission, check the amount of entities sheared and compare with needed.
 			if(questTracker >= this.amountNeeded){
-				//player should have placed enough blocks for the quest
+				//player should have sheared enough entities
 				return true;
 			}
 		}
@@ -206,7 +246,7 @@ public class Objective{
 		if(this.type.equalsIgnoreCase("switch")){
 			//It's a shear mission, check the amount of items switched and compare with needed.
 			if(questTracker >= this.amountNeeded){
-				//player should have placed enough blocks for the quest
+				//player should have switched enough items.
 				return true;
 			}
 		}
@@ -214,7 +254,7 @@ public class Objective{
 		if(this.type.equalsIgnoreCase("till")){
 			//It's a shear mission, check the amount of tilling done and compare with needed.
 			if(questTracker >= this.amountNeeded){
-				//player should have placed enough blocks for the quest
+				//player should have tilled enough land
 				return true;
 			}
 		}
@@ -222,7 +262,15 @@ public class Objective{
 		if(this.type.equalsIgnoreCase("plant")){
 			//It's a shear mission, check the amount planted and compare with needed.
 			if(questTracker >= this.amountNeeded){
-				//player should have placed enough blocks for the quest
+				//player should have planted enough items
+				return true;
+			}
+		}
+		//check if it's an enchant quest
+		if(this.type.equalsIgnoreCase("enchant")){
+			//It's a shear mission, check the amount enchanted and compare with needed.
+			if(questTracker >= this.amountNeeded){
+				//player should have enchanted enough items for the quest
 				return true;
 			}
 		}
@@ -230,7 +278,7 @@ public class Objective{
 		if(this.type.equalsIgnoreCase("fillbucket")){
 			//It's a shear mission, check the amount of entities sheared and compare with needed.
 			if(questTracker >= this.amountNeeded){
-				//player should have placed enough blocks for the quest
+				//player should have filled enough buckets
 				return true;
 			}
 		}
@@ -262,7 +310,7 @@ public class Objective{
 		if(this.type.equalsIgnoreCase("kill")){
 			//it's a blockplace mission, check the amount of the item they have and compare it to the mission reqs
 			if(questTracker >= this.amountNeeded){
-				//player should have placed enough blocks for the quest
+				//player should have killed enough targets
 				return true;
 			}
 		}
@@ -274,14 +322,15 @@ public class Objective{
 				return true;
 			}
 		}
+		/*
 		//check if it's a move quest
 		if(this.type.equalsIgnoreCase("move")){
 			//it's a blockplace mission, check the amount of the item they have and compare it to the mission reqs
 			if(questTracker >= this.amountNeeded){
-				//player should have placed enough blocks for the quest
+				//player should have moved enough.
 				return true;
 			}
-		} 
+		}*/ 
 		return false; //quest is not complete
 	}
 	// Updated countItems for durability check *Croyd*	
@@ -300,12 +349,20 @@ public class Objective{
 		return count;
 	}
 // Updated removeItem to remove items by durability. I give credit for this code to Pamagester *Croyd*	
-	public void removeItem(Player player, int id, short itemDurability, int amountToConsume) {
+	public void removeItem(Player player, int id, short itemDurability, int amountToConsume, String enchant) {
 		HashMap<Integer, ? extends ItemStack> bag = player.getInventory().all(id);
 		for (Map.Entry<Integer, ? extends ItemStack> entry : bag.entrySet()) {
 			int index = entry.getKey();
 			ItemStack item = entry.getValue();
 			int stackAmount = item.getAmount();
+			if(enchant != null) {
+				Map<Enchantment, Integer> enchants = item.getEnchantments();
+				for (Enchantment theEnchant : enchants.keySet()) {
+					if(theEnchant.getName() == enchant){
+						
+					}
+				}
+			}
 			if( itemDurability == item.getDurability()){
 				if(stackAmount <= amountToConsume){
 					amountToConsume -= item.getAmount();
@@ -393,5 +450,11 @@ public class Objective{
 
 	public void setItemNeeded(ItemStack itemNeeded) {
 		this.itemNeeded = itemNeeded;
+	}
+	public int getItemID() {
+		return itemID;
+	}
+	public int getLevel() {
+		return level;
 	}
 }

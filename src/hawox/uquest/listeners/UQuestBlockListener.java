@@ -1,5 +1,8 @@
-package hawox.uquest;
+package hawox.uquest.listeners;
 
+import hawox.uquest.Quester;
+import hawox.uquest.UQuest;
+import hawox.uquest.UQuestUtils;
 import hawox.uquest.questclasses.LoadedQuest;
 
 import org.bukkit.block.Block;
@@ -51,7 +54,6 @@ public class UQuestBlockListener implements Listener {
      	}
      }
     
-    
     public void blockCheckQuest(Player player, Block block, String type, int incressBy){
     	if(plugin.isEnabled() == true){
     		//get our quester
@@ -64,27 +66,23 @@ public class UQuestBlockListener implements Listener {
     			}
     			//check if the block they (did 'type' to) is the one they need
     			LoadedQuest loadedQuest = plugin.getQuestersQuest(quester);
-    			String objectiveName = Integer.toString(block.getTypeId());
+    			String objectiveName = Integer.toString(UQuestUtils.checkBlock(block));
     			if(loadedQuest.checkObjective(plugin, player.getLocation(), type, objectiveName)){
     				//Updated to only check off what is needed, to add quest level, and to message player on add. *Croyd*
     				int amountNeeded = loadedQuest.getObjectiveFromTypes(type, objectiveName).getAmountNeeded()*questLevel;
     				int itemDurability = loadedQuest.getObjectiveFromTypes(type, objectiveName).getItemDurability();
-    				//For Torches, they have a different durability when placed.
-    				int blockDurability = block.getData();
-    				//Some blocks have a different durability when placed so we'll check for them. *Croyd*
-    				if(block.getTypeId() == 50 || block.getTypeId() == 76) {
-    					blockDurability = 0;
-    				}
+    				int blockDurability = UQuestUtils.checkDurability(block);
     				if(quester.getTracker(plugin, objectiveName) < amountNeeded && itemDurability == blockDurability) {
     					//Awesome! Increase their broken,placed, or damaged blocks!
     					quester.addToTracker(plugin, objectiveName, 1);
-    					player.sendMessage(plugin.formatUpdateMessage(type, block.getType().name(), quester.getTracker(plugin, objectiveName), amountNeeded));
+    					player.sendMessage(UQuestUtils.formatUpdateMessage(type, block.getType().name(), quester.getTracker(plugin, objectiveName), amountNeeded));
     				}
     			}
     		}
     		if(plugin.isUseSQLite() == true){
     			plugin.getDB().put(player.getName(), quester);
     		}
+    		
     	}
     }
 }

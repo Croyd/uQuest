@@ -363,6 +363,20 @@ public class QuestLoader {
 
 		    	}else
 		    	
+		    	if(type.equalsIgnoreCase("Enchant")){
+		    		try{
+		    			returnMe.add(new Objective("enchant", (String)moreInfo.get("Display_Name"), (String)moreInfo.get("Objective_ID"),  (Integer)moreInfo.get("Level"), (Integer)moreInfo.get("Amount"), (Integer)moreInfo.get("Item_ID"), theLocation.toStringFromPoint(), theLocation.toStringFromGive()));
+		    		}catch(NullPointerException npe){
+		    			try{
+		    				returnMe.add(new Objective("enchant", (String)moreInfo.get("Display_Name"), (String)moreInfo.get("Objective_ID"),  (Integer)moreInfo.get("Level"), (Integer)moreInfo.get("Amount"), (Integer)moreInfo.get("Item_ID"), null, null));
+		    			}catch(NullPointerException npe2){
+		    				//player did not format their quest correctly at this point.
+		    				questLoadError(questNumber, "Objective format error:\n Key:" + key + "\nType:" + type + " \n Value:" + value);
+		    			}
+		    		}
+		    		
+		    	}else
+		    	
 		    	if(type.equalsIgnoreCase("Block_Destroy")){
 		    		try{
 		    			returnMe.add(new Objective("blockdestroy", (String)moreInfo.get("Display_Name"), Integer.toString((Integer)moreInfo.get("Objective_ID")),(Integer)moreInfo.get("Durability"), (Integer)moreInfo.get("Amount"), theLocation.toStringFromPoint(), theLocation.toStringFromGive()));
