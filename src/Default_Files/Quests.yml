@@ -61,7 +61,7 @@
         Amount: 25
         Durability: 0
 3:
-  Name: DoorThief
+  Name: Door Thief
   Start_Info: dayls stole my doors! Craft me replacements!
   Finish_Info: Can you hold the door open please?
   Rewards:
@@ -75,7 +75,7 @@
         Amount: 1
         Durability: 0
 4:
-  Name: RichMan
+  Name: Rich Man
   Start_Info: Please gather me some shiny diamonds!
   Finish_Info: Now I have the diamonds!
   Rewards:
@@ -103,7 +103,7 @@
         Amount: 10
         Durability: 0
 6:
-  Name: MrCactus
+  Name: Mr. Cactus
   Start_Info: Get me lots and lots of Cactus! Quickly!
   Finish_Info: Ow, you poked me!
   Rewards:
@@ -117,7 +117,7 @@
         Amount: 50
         Durability: 0
 7:
-  Name: SwordMaker
+  Name: Sword Maker
   Start_Info: I need to prepare myself! Make me a iron sword!
   Finish_Info: THIS IS SPARTA!
   Rewards:
@@ -159,7 +159,7 @@
         Amount: 10
         Durability: 0
 10:
-  Name: ObsidianMan
+  Name: Obsidian Man
   Start_Info: I like obsidian! Go get me a few blocks!
   Finish_Info: Well that took forever!
   Rewards:
@@ -201,7 +201,7 @@
         Amount: 5
         Durability: 0
 13:
-  Name: CoalMiner
+  Name: Coal Miner
   Start_Info: I need coal for my furnace! Gimme Gimme Gimme!
   Finish_Info: You got some coal on your face.
   Rewards:
@@ -215,7 +215,7 @@
         Amount: 32
         Durability: 0
 14:
-  Name: GoFlyaKite
+  Name: Go Fly a Kite
   Start_Info: I want to make a kite! Get me enough string!
   Finish_Info: Look at it fly!!
   Rewards:
@@ -229,7 +229,7 @@
         Amount: 10
         Durability: 0
 15:
-  Name: RailRoad
+  Name: Rail Road
   Start_Info: Im going to make something! Make me a diamond pick!
   Finish_Info: Oh Ive been workin on the railroad!
   Rewards:
@@ -239,11 +239,11 @@
       Type: Gather
       Item:
         Item_ID: 278
-        Display_Name: DiamondPickaxe
+        Display_Name: Diamond Pickaxe
         Amount: 1
         Durability: 0
 16:
-  Name: CarefulNow
+  Name: Careful Now
   Start_Info: I dislike my neighbors, make me TnT!
   Finish_Info: Mwuahahahah
   Rewards:
@@ -257,7 +257,7 @@
         Amount: 2
         Durability: 0
 17:
-  Name: NiceAndSmooth
+  Name: Nice and Smooth
   Start_Info: I need some smoothstone (rock). Gather me a mountainside!
   Finish_Info: Oh its soo nice looking!
   Rewards:
@@ -271,7 +271,7 @@
         Amount: 100
         Durability: 0
 18:
-  Name: RobinHood
+  Name: Robin Hood
   Start_Info: I must beat robin hood! Get me a quiver full of arrows!
   Finish_Info: Oh its soo nice looking!
   Rewards:
@@ -299,7 +299,7 @@
         Amount: 10
         Durability: 0
 20:
-  Name: NiceAndLeafy
+  Name: Nice and Leafy
   Start_Info: I need to give back, get me some oak saplings.
   Finish_Info: Trees galore!
   Rewards:
@@ -355,7 +355,7 @@
         Amount: 64
         Durability: 0
 24:
-  Name: KittyKitty
+  Name: Kitty Kitty
   Start_Info: My kitty is hungry! Make it some Cooked fish!
   Finish_Info: Good Kitty!
   Rewards:
@@ -369,7 +369,7 @@
         Amount: 2
         Durability: 0
 25:
-  Name: DirtForMe
+  Name: Dirt for Me
   Start_Info: Im making something special. Get me Dirt!
   Finish_Info: Youre looking kinda.. Dirty.
   Rewards:
@@ -397,7 +397,7 @@
         Amount: 28
         Durability: 0
 27:
-  Name: WhatDidYouSay
+  Name: What Did You Say
   Start_Info: I have some farming to do, get me some stone hoes.
   Finish_Info: Thanks for the stone hard hoes!
   Rewards:
@@ -453,7 +453,7 @@
         Amount: 2
         Durability: 0
 31:
-  Name: PunchWood
+  Name: Punch Wood
   Start_Info: This is minecraft. Punch wood.
   Finish_Info: Fists of steel!
   Rewards:
@@ -461,7 +461,7 @@
   Objectives:
     0:
       Type: Block_Damage
-      Display_Name: Oak Planks punched
+      Display_Name: Oak Wood Punched
       Objective_ID: 17
       Amount: 150
       Durability: 0
@@ -530,7 +530,7 @@
       Amount: 20
       Durability: 0
 37:
-  Name: DigDug
+  Name: Dig Dug
   Start_Info: Punch grass, but dont break it! I like the noise!
   Finish_Info: Thanks!
   Rewards:
@@ -543,7 +543,7 @@
       Amount: 100
       Durability: 0
 38:
-  Name: DugDig
+  Name: Dug Dig
   Start_Info: Punch dirt, but dont break it! I like the noise!
   Finish_Info: Thanks!
   Rewards:
@@ -556,7 +556,7 @@
       Amount: 100
       Durability: 0
 39:
-  Name: SandRenovation
+  Name: Sand Renovation
   Start_Info: Destory the sand!
   Finish_Info: Theres still so much sand... T.T
   Rewards:
@@ -569,7 +569,7 @@
       Amount: 150
       Durability: 0
 40:
-  Name: TrapMaster
+  Name: Trap Master
   Start_Info: My neighbors keep stepping on my flowers, please make me a few dispensers!
   Finish_Info: Prepare to battle neighbors!
   Rewards:

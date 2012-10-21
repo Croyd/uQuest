@@ -38,6 +38,12 @@ public class UQuestUtils {
     		if(bDur == 11) toreturn = 3;
     		if(bDur == 12) toreturn = 4;
     		if(bDur == 13) toreturn = 5;
+    		if(bID == 17) {//For sideways logs.
+    			if(bDur == 4) toreturn = 0;
+    			if(bDur == 5) toreturn = 1;
+    			if(bDur == 6) toreturn = 2;
+    			if(bDur == 7) toreturn = 3;
+    		}
     	} else {
         /*
          * There are lots of blocks that have different durability when placed and depending on the direction placed.
