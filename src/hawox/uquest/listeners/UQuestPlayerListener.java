@@ -6,11 +6,14 @@ import hawox.uquest.UQuestUtils;
 import hawox.uquest.questclasses.LoadedQuest;
 import hawox.uquest.questclasses.Objective;
 
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Sheep;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,6 +22,7 @@ import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerFishEvent.State;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 //import org.bukkit.event.player.PlayerMoveEvent;
@@ -30,7 +34,7 @@ import org.bukkit.inventory.ItemStack;
  * Handle events for all Player related events
  */
 public class UQuestPlayerListener implements Listener {
-    private final UQuest plugin;
+	private final UQuest plugin;
 
     public UQuestPlayerListener(UQuest instance) {
         plugin = instance;
@@ -115,6 +119,13 @@ public class UQuestPlayerListener implements Listener {
     		doPlayerEvent(event);
     	}    	
     }
+    //Event handler for Planting, Tilling, and Switching. *Croyd*
+    @EventHandler
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+    	if(plugin.isEnabled() == true){
+    		doPlayerEvent(event);
+    	}    	
+    }
     
     public void doPlayerEvent(PlayerEvent event) {
     	Player player = event.getPlayer();
@@ -127,7 +138,7 @@ public class UQuestPlayerListener implements Listener {
 			LoadedQuest loadedQuest = plugin.getQuestersQuest(quester);
 			String message = "";
 			int amountNeed;
-        	switch(event.getEventName()) {
+			switch(event.getEventName()) {
         	case "PlayerInteractEvent"://Planting, Switching, and Tilling
         		PlayerInteractEvent piEvent = (PlayerInteractEvent) event;
         		Action action = piEvent.getAction();
@@ -191,7 +202,7 @@ public class UQuestPlayerListener implements Listener {
         						quester.addToTracker(plugin, objectiveName, 1);
         						message = UQuestUtils.formatUpdateMessage("plant", itemname, quester.getTracker(plugin, objectiveName), amountNeed);
         					}    						
-    					}    						
+    					}  
             		}
                 	break;
                 case LEFT_CLICK_BLOCK:
@@ -238,7 +249,7 @@ public class UQuestPlayerListener implements Listener {
 					amountNeed = loadedQuest.getObjectiveFromTypes("fillbucket", "milk").getAmountNeeded()*questLevel;
 	    			if(quester.getTracker(plugin, "milk") < amountNeed) {
 	    				quester.addToTracker(plugin, "milk", 1);
-    					message = UQuestUtils.formatUpdateMessage("fillbucket", "Cow", quester.getTracker(plugin, "milk"), amountNeed);    					
+    					message = UQuestUtils.formatUpdateMessage("fillbucket", "Milk", quester.getTracker(plugin, "milk"), amountNeed);    					
     				} 
     			}
         		break;
@@ -300,6 +311,34 @@ public class UQuestPlayerListener implements Listener {
     					message = UQuestUtils.formatUpdateMessage("shear", e.getName(), quester.getTracker(plugin, entName), amountNeeded);
     				}
     			}
+        		break;
+        	case "PlayerInteractEntityEvent":
+        		PlayerInteractEntityEvent pieEvent = (PlayerInteractEntityEvent) event;
+        		HeldItem = player.getItemInHand();
+        		mat = player.getItemInHand().getType();
+        		//Dyeing Sheep
+        		if(pieEvent.getRightClicked() instanceof Sheep && mat.name().equalsIgnoreCase("ink_sack")) {
+        			Sheep sheep = (Sheep) pieEvent.getRightClicked();
+        			String dye = HeldItem.getTypeId() + "," + HeldItem.getDurability();
+        			DyeColor dycolor = DyeColor.getByData((byte)(15-HeldItem.getDurability()));
+        			if(loadedQuest.checkObjective(plugin, player.getLocation(), "dye", dye) && !sheep.getColor().equals(dycolor)){
+        				int amountNeeded = loadedQuest.getObjectiveFromTypes("dye", dye).getAmountNeeded()*questLevel;
+        				if(quester.getTracker(plugin, dye) < amountNeeded) {
+        					quester.addToTracker(plugin, dye, 1);
+        					message = UQuestUtils.formatUpdateMessage("dye", sheep.getType().name(), quester.getTracker(plugin, dye), amountNeeded);
+        				}
+        			}
+        		}
+        		//Milking Mooshrooms for Mushroom Soup
+        		if(pieEvent.getRightClicked() instanceof MushroomCow && mat.name().equalsIgnoreCase("bowl")) {
+        			if(loadedQuest.checkObjective(plugin, player.getLocation(), "fillbucket", "soup")) {
+        				int amountNeeded = loadedQuest.getObjectiveFromTypes( "fillbucket", "soup").getAmountNeeded()*questLevel;
+        				if(quester.getTracker(plugin, "soup") < amountNeeded) {
+        					quester.addToTracker(plugin, "soup", 1);
+        					message = UQuestUtils.formatUpdateMessage("fillbucket", "Mushroom Soup", quester.getTracker(plugin, "soup"), amountNeeded);
+        				}	
+        			}
+        		}
         		break;
         	}
         	if(!(message == ""))

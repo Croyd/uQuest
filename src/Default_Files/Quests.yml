@@ -974,3 +974,27 @@
       Level: 1
       Amount: 1
       Item_ID: 306
+67:
+  Name: I need mushroom soup fresh from a Mooshroom.
+  Start_Info: Use a bowl on a Mooshroom and get some soup.
+  Finish_Info: Thanks much!
+  Rewards:
+    Money: 700
+  Objectives:
+    0:
+      Type: Fill_Bucket
+      Display_Name: Mushroom Soup
+      Objective_ID: soup
+      Amount: 5
+68:
+  Name: Dye some sheep pink for me.
+  Start_Info: Go Dye those sheep!
+  Finish_Info: That is more like it.
+  Rewards:
+    Money: 500
+  Objectives:
+    0:
+      Type: Dye
+      Display_Name: Sheep Dyed
+      Objective_ID: 351,9
+      Amount: 5

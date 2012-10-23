@@ -192,7 +192,8 @@ public class Objective{
 				this.type.equalsIgnoreCase("fish") || this.type.equalsIgnoreCase("fillbucket") ||
 				this.type.equalsIgnoreCase("move") || this.type.equalsIgnoreCase("shear") ||
 				this.type.equalsIgnoreCase("till") || this.type.equalsIgnoreCase("switch") ||
-				this.type.equalsIgnoreCase("plant") || this.type.equalsIgnoreCase("enchant")){
+				this.type.equalsIgnoreCase("plant") || this.type.equalsIgnoreCase("enchant") ||
+				this.type.equalsIgnoreCase("dye")){
 			howMuch = questTracker;
 		}
 		//Objectives that are complete will look different than non completed objectives
@@ -276,6 +277,14 @@ public class Objective{
 		}
 		//check if it's a fillbucket quest.
 		if(this.type.equalsIgnoreCase("fillbucket")){
+			//It's a shear mission, check the amount of entities sheared and compare with needed.
+			if(questTracker >= this.amountNeeded){
+				//player should have filled enough buckets
+				return true;
+			}
+		}
+		//check if it's a fillbucket quest.
+		if(this.type.equalsIgnoreCase("dye")){
 			//It's a shear mission, check the amount of entities sheared and compare with needed.
 			if(questTracker >= this.amountNeeded){
 				//player should have filled enough buckets

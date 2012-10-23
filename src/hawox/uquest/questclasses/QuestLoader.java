@@ -403,6 +403,19 @@ public class QuestLoader {
 			  		}
 				}else
 					
+				if(type.equalsIgnoreCase("Dye")){
+				  	try{
+				  		returnMe.add(new Objective("dye", (String)moreInfo.get("Display_Name"), (String)moreInfo.get("Objective_ID"), (Integer)moreInfo.get("Amount"), theLocation.toStringFromPoint(), theLocation.toStringFromGive()));
+				  	}catch(NullPointerException npe){
+				  		try{
+				  			returnMe.add(new Objective("dye", (String)moreInfo.get("Display_Name"), (String)moreInfo.get("Objective_ID"), (Integer)moreInfo.get("Amount"), null, null));
+				  			}catch(NullPointerException npe2){
+				    			//player did not format their quest correctly at this point.
+				    			questLoadError(questNumber, "Objective format error:\n Key:" + key + "\nType:" + type + " \n Value:" + value);
+				    		}
+				  	}
+				}else					
+					
 				if(type.equalsIgnoreCase("Shear")){
 			  		try{
 			  			returnMe.add(new Objective("shear", (String)moreInfo.get("Display_Name"), (String)moreInfo.get("Objective_ID"), (Integer)moreInfo.get("Amount"), theLocation.toStringFromPoint(), theLocation.toStringFromGive()));

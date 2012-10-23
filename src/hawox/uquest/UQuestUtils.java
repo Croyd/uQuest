@@ -148,10 +148,11 @@ public class UQuestUtils {
 			break;
 		case "fillbucket":
 			theString += ChatColor.DARK_BLUE;
-			if(name.equals("Cow"))
-				theString += "Milked a ";
-			if(name.equals("Water") || name.equals("Lava"))
-				theString += "Filled bucket with ";
+			if(name.equals("Mushroom Soup")) {
+				theString += "Filled bowl with ";
+			} else {
+				theString += "Filled bucket with ";	
+			}
 			break;
 		case "switch":
 			theString += ChatColor.GREEN;
@@ -172,6 +173,9 @@ public class UQuestUtils {
 			theString += ChatColor.GREEN;
 			theString += "Planted some ";
 			break;
+		case "dye":
+			theString += ChatColor.YELLOW;
+			theString += "Dyed a ";
 		}
 		theString += name + " " + colorAmount + theSlash + colorNeeded;
 		return theString;
