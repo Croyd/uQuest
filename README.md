@@ -11,6 +11,10 @@ I have added a lot and done some changes, so decided not to fork it and instead 
 
 Also need to give credit to **morganm** for putting in **Vault** support for Permissions and Economies.
 
+Now updated to 1.7.2
+
+Here is the link for the jar: [uQuest Jar]( https://dl.dropboxusercontent.com/u/58005429/uQuest.jar )
+
 ##Plugin Info
 [Commands & Permissions](https://github.com/Croyd/uQuest/wiki/Commands-&-Permissions)
 
