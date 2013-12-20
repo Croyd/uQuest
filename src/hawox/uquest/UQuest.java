@@ -26,7 +26,6 @@ import java.util.logging.Logger;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -512,77 +511,6 @@ public class UQuest extends JavaPlugin {
 		return this.getTheQuests().get(q.getQuestID());
 	}
 	
-	public String formatUpdateMessage(String qtype, String oname, int amount, int needed){
-		String theString = "";
-		String theSlash = ChatColor.WHITE + "/";
-		String colorAmount;
-		String colorNeeded = ChatColor.GREEN + Integer.toString(needed);
-		String name = UQuestUtils.formatName(oname.toLowerCase());
-		if(amount == needed) {
-			colorAmount = ChatColor.GREEN + Integer.toString(amount);
-		} else {
-			colorAmount = ChatColor.AQUA + Integer.toString(amount);
-		}
-		switch(qtype){
-		case "gather":
-			theString += ChatColor.GREEN;
-			theString += "Gathered  ";
-			break;
-		case "shear":
-			theString += ChatColor.YELLOW;
-			theString += "Sheared a ";
-			break;
-		case "kill":
-			theString += ChatColor.RED;
-			theString += "Killed ";
-			break;
-		case "blockdestroy":
-			theString += ChatColor.DARK_RED;
-			theString += "Destroyed ";
-			break;
-		case "blockplace":
-			theString += ChatColor.DARK_GREEN;
-			theString += "Placed ";
-			break;
-		case "blockdamage":
-			theString += ChatColor.DARK_AQUA;
-			theString += "Damaged a ";
-			break;
-		case "fish":
-			theString += ChatColor.BLUE;
-			theString += "Hooked a ";
-			break;
-		case "fillbucket":
-			theString += ChatColor.DARK_BLUE;
-			if(name.equals("Cow"))
-				theString += "Milked a ";
-			if(name.equals("Water") || name.equals("Lava"))
-				theString += "Filled bucket with ";
-			break;
-		case "switch":
-			theString += ChatColor.GREEN;
-			if(name.equals("Lever"))
-				theString += "Toggled a ";
-			if(name.equals("Button"))
-				theString += "Pushed a ";
-			if(name.equals("Wooden Door"))
-				theString += "Opened/Closed a ";
-			if(name.equals("Trap Door"))
-				theString += "Opened/Closed a ";
-			break;
-		case "till":
-			theString += ChatColor.DARK_GREEN;
-			theString += "Tilled ";
-			break;
-		case "plant":
-			theString += ChatColor.GREEN;
-			theString += "Planted some ";
-			break;
-		}
-		theString += name + " " + colorAmount + theSlash + colorNeeded;
-		return theString;
-	}
-
 	/* no longer necessary, Vault takes care of all this for us now. -morganm 3/3/11
 	public static void setPermissions(PermissionHandler permissions) {
 		Permissions = permissions;

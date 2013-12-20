@@ -1,6 +1,6 @@
 name: uQuest
 main: hawox.uquest.UQuest
-version: 2.6.1
+version: 2.5.3
 author: Hawox,morganm,Croyd
 softdepend: [Vault]
 description: >

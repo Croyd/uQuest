@@ -9,14 +9,12 @@ public class QuestDropEvent extends UQuestEvent{
 	Quester quester;
 	int questId;
 	
-	
 	public QuestDropEvent(Player p, Quester q, int id){
 //		super("QuestGetEvent");
 		this.player = p;
 		this.quester = q;
 		this.questId = id;
 	}
-	
 	
 	public Player getPlayer() {
 		return player;

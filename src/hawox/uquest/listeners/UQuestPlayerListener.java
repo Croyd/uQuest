@@ -320,7 +320,8 @@ public class UQuestPlayerListener implements Listener {
         		if(pieEvent.getRightClicked() instanceof Sheep && mat.name().equalsIgnoreCase("ink_sack")) {
         			Sheep sheep = (Sheep) pieEvent.getRightClicked();
         			String dye = HeldItem.getTypeId() + "," + HeldItem.getDurability();
-        			DyeColor dycolor = DyeColor.getByData((byte)(15-HeldItem.getDurability()));
+        			@SuppressWarnings("deprecation")
+					DyeColor dycolor = DyeColor.getByData((byte)(15-HeldItem.getDurability()));
         			if(loadedQuest.checkObjective(plugin, player.getLocation(), "dye", dye) && !sheep.getColor().equals(dycolor)){
         				int amountNeeded = loadedQuest.getObjectiveFromTypes("dye", dye).getAmountNeeded()*questLevel;
         				if(quester.getTracker(plugin, dye) < amountNeeded) {
