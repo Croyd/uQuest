@@ -3,6 +3,7 @@ package hawox.uquest.commands;
 
 import hawox.uquest.Quester;
 import hawox.uquest.UQuest;
+import hawox.uquest.questclasses.LoadedQuest;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -138,6 +139,32 @@ public class Cmd_uquest implements CommandExecutor{
 						return true;					}
 				}
 				
+				if( (args[0].equalsIgnoreCase("update") || args[0].equalsIgnoreCase("u")) ){
+					if( plugin.hasPermission(player, "uQuest.CanQuest.update") ) {
+						if(quester.getQuestID() == -1){
+							player.sendMessage(ChatColor.RED + "You don't have an active quest!");
+						} else{
+							LoadedQuest loadedQuest = plugin.getQuestersQuest(quester);
+							if(loadedQuest.checkObjectiveType(plugin, "gather")){
+								/*System.out.println("gather");
+					        	int questLevel = 1;
+								if(plugin.isScaleQuestLevels()){
+									questLevel = plugin.getQuestInteraction().getQuestLevel(player)+1;
+					    		}
+								String message = "";
+								int amountNeed; */
+								loadedQuest.gatherObectives(plugin, player, quester);
+								
+							}else{
+								//quest is not done!
+								player.sendMessage(ChatColor.RED + "Your don't have a gather quest! Type: /uQuest info");
+							}
+						}
+					}else{
+						player.sendMessage(ChatColor.RED + "You don't have permission to complete quests this way!");
+						return true;					}
+				}
+
 				if(args[0].equalsIgnoreCase("drop")) {
 					if( plugin.hasPermission(player, "uQuest.CanQuest.CanDropQuest") ) {
 						//do they even have a quest?
@@ -209,6 +236,7 @@ public class Cmd_uquest implements CommandExecutor{
 		player.sendMessage(ChatColor.LIGHT_PURPLE + "   ->" + ChatColor.GREEN + "/uquest amount" + ChatColor.WHITE + "  |  " + ChatColor.BLUE + "Shows the amount of loaded quests");
 		player.sendMessage(ChatColor.LIGHT_PURPLE + "   ->" + ChatColor.GREEN + "/uquest give" + ChatColor.WHITE + "  |  " + ChatColor.BLUE + "Gives you a random quest");
 		player.sendMessage(ChatColor.LIGHT_PURPLE + "   ->" + ChatColor.GREEN + "/uquest done" + ChatColor.WHITE + "  |  " + ChatColor.BLUE + "Attempts to turn in your current quest");
+		player.sendMessage(ChatColor.LIGHT_PURPLE + "   ->" + ChatColor.GREEN + "/uquest update" + ChatColor.WHITE + "  |  " + ChatColor.BLUE + "Updates/Removes gather quest items.");
 		player.sendMessage(ChatColor.LIGHT_PURPLE + "   ->" + ChatColor.GREEN + "/uquest info" + ChatColor.WHITE + "  |  " + ChatColor.BLUE + "Resends you your quest info/progress");
 		player.sendMessage(ChatColor.LIGHT_PURPLE + "   ->" + ChatColor.GREEN + "/uquest drop" + ChatColor.WHITE + "  |  " + ChatColor.BLUE + "Drops your current quest");
 		player.sendMessage(ChatColor.LIGHT_PURPLE + "   ->" + ChatColor.GREEN + "/uquest top #" + ChatColor.WHITE + "  |  " + ChatColor.BLUE + "Shows you the top 5 questers");

@@ -4,13 +4,13 @@ import hawox.uquest.Quester;
 import hawox.uquest.UQuest;
 import hawox.uquest.UQuestUtils;
 import hawox.uquest.questclasses.LoadedQuest;
-import hawox.uquest.questclasses.Objective;
+//import hawox.uquest.questclasses.Objective;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
+//import org.bukkit.entity.Item;
 import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
@@ -33,6 +33,7 @@ import org.bukkit.inventory.ItemStack;
 /*
  * Handle events for all Player related events
  */
+@SuppressWarnings("deprecation")
 public class UQuestPlayerListener implements Listener {
 	private final UQuest plugin;
 
@@ -280,7 +281,7 @@ public class UQuestPlayerListener implements Listener {
 					break;
     	    	}
         		break;
-        	case "PlayerPickupItemEvent": //Gathering
+        	/*case "PlayerPickupItemEvent": //Gathering
         		PlayerPickupItemEvent ppiEvent = (PlayerPickupItemEvent) event;
             	Item eName = ppiEvent.getItem();
             	int itemAmount = eName.getItemStack().getAmount();
@@ -292,14 +293,22 @@ public class UQuestPlayerListener implements Listener {
     				int amountHave = objective.countItems(player, Integer.parseInt(objective.getObjectiveName()) , (short)objective.getItemDurability());
     				amountNeed = loadedQuest.getObjectiveFromTypes("gather", objectiveName).getAmountNeeded()*questLevel;
     				if(amountHave < amountNeed && itemDur == (short)objective.getItemDurability() ) {
-        				if((itemAmount+amountHave) >= amountNeed){
-        					message = UQuestUtils.formatUpdateMessage("gather", Material.getMaterial(itemID).name() , amountNeed, amountNeed);
-        				} else {
-        					message = UQuestUtils.formatUpdateMessage("gather", Material.getMaterial(itemID).name() , itemAmount+amountHave, amountNeed);
-        				}
+						if(itemAmount > (amountNeed - amountHave)) {
+							int keep = itemAmount - (amountNeed - amountHave);
+							itemAmount = itemAmount - keep;
+							ppiEvent.getItem().getItemStack().setAmount(keep);
+							ppiEvent.getPlayer().getInventory().removeItem(ppiEvent.getItem().getItemStack());
+						} else {
+							ppiEvent.getItem().getItemStack().setAmount(0);
+							ppiEvent.getPlayer().getInventory().removeItem(ppiEvent.getItem().getItemStack());
+
+						}
+						objective.removeItem(player, itemID, itemDur, itemAmount, null);	
+						quester.addToTracker(plugin, objective.getObjectiveName(), itemAmount);
+						player.sendMessage(UQuestUtils.formatUpdateMessage("gather", objective.getDisplayname(), quester.getTracker(plugin, objective.getObjectiveName()), amountNeed));
     				}
     			}
-        		break;
+        		break;*/
         	case "PlayerShearEntityEvent": //Shearing
         		PlayerShearEntityEvent psEvent = (PlayerShearEntityEvent) event;
         		EntityType e = psEvent.getEntity().getType();
@@ -320,7 +329,6 @@ public class UQuestPlayerListener implements Listener {
         		if(pieEvent.getRightClicked() instanceof Sheep && mat.name().equalsIgnoreCase("ink_sack")) {
         			Sheep sheep = (Sheep) pieEvent.getRightClicked();
         			String dye = HeldItem.getTypeId() + "," + HeldItem.getDurability();
-        			@SuppressWarnings("deprecation")
 					DyeColor dycolor = DyeColor.getByData((byte)(15-HeldItem.getDurability()));
         			if(loadedQuest.checkObjective(plugin, player.getLocation(), "dye", dye) && !sheep.getColor().equals(dycolor)){
         				int amountNeeded = loadedQuest.getObjectiveFromTypes("dye", dye).getAmountNeeded()*questLevel;

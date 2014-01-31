@@ -14,7 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
-
+@SuppressWarnings("deprecation")
 public class UQuestEnchantListener implements Listener {
     private final UQuest plugin;
     public UQuestEnchantListener(UQuest instance) {

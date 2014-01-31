@@ -26,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
  * ExtrasManager still has it's own class incase I need to make adjustments later.
  * For now, just pretend that the methods in ExtrasManager exist in this class only.
  */
+@SuppressWarnings("deprecation")
 final public class QuestInteraction extends ExtrasManager{
 	private final UQuest plugin;
 

@@ -37,6 +37,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 /*
  * Handle events for all Entity related events
  */
+@SuppressWarnings("deprecation")
 public class UQuestEntityListener implements Listener {
     private final UQuest plugin;
 

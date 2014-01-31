@@ -2,6 +2,7 @@ package hawox.uquest.questclasses;
 
 import hawox.uquest.Quester;
 import hawox.uquest.UQuest;
+import hawox.uquest.UQuestUtils;
 import hawox.uquest.interfaceevents.QuestFinishEvent;
 import hawox.uquest.questclasses.QuestLoader.YamlQuest;
 import hawox.uquest.questclasses.QuestLoader.ymlReward;
@@ -88,6 +89,7 @@ public class LoadedQuest {
 	public boolean doneCheck(UQuest plugin, Player player){
 		try{
 			Quester quester = plugin.getQuestInteraction().getQuester(player);
+			gatherObectives(plugin, player, quester);
 			int doneAmount = 0;
 			for(Objective objective : this.objectives){
 				if(objective.doneCheck(player, quester.getTracker(plugin, objective.getObjectiveName())))
@@ -118,7 +120,40 @@ public class LoadedQuest {
 		//If, for some reason, the new location check above fails and we get a null obj. We will still have this old fallback here.
 		return ( this.objectiveTypes.contains(type + ":" + name) );
 	}
-	
+	//Returns true if they have the type of objective requested. *Croyd*
+	public boolean checkObjectiveType(UQuest plugin, String type) {
+		for(Objective objective : this.objectives){
+			if(objective.getType() == type)
+				return true;
+		}
+		return false;
+	}
+	//Checks if they have a gather quest, removes items for it, and updates it. *Croyd*
+	public void gatherObectives(UQuest plugin, Player player, Quester quester) {
+		for(Objective objective : this.objectives){
+			if(objective.getType() == "gather") {
+	        	int questLevel = 1;
+				if(plugin.isScaleQuestLevels()){
+					questLevel = plugin.getQuestInteraction().getQuestLevel(player)+1;
+	    		}
+				int amounthave = quester.getTracker(plugin, objective.getObjectiveName());
+				int amountNeeded = objective.amountNeeded*questLevel;
+				if(amounthave < amountNeeded) {
+					int itemcount = objective.countItems(player, Integer.parseInt(objective.getObjectiveName()), (short) objective.getItemDurability());
+					if(itemcount > 0) {
+						if(itemcount > (amountNeeded - amounthave)) {
+							int keep = itemcount - (amountNeeded - amounthave);
+							itemcount = itemcount - keep;
+						}
+						objective.removeItem(player, Integer.parseInt(objective.getObjectiveName()), (short) objective.getItemDurability(), itemcount, null);	
+						quester.addToTracker(plugin, objective.getObjectiveName(), itemcount);
+					}
+					player.sendMessage(UQuestUtils.formatUpdateMessage("gather", objective.getDisplayname(), quester.getTracker(plugin, objective.getObjectiveName()), amountNeeded));
+				}
+			}
+		}
+	}
+
 	public Objective getObjectiveFromTypes(String type, String name){
 		for(Objective obj : this.objectives){
 			if(obj.type.equalsIgnoreCase(type) && obj.getObjectiveName().equalsIgnoreCase(name))

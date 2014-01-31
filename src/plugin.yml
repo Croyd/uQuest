@@ -1,6 +1,6 @@
 name: uQuest
 main: hawox.uquest.UQuest
-version: 2.5.3
+version: 2.5.4
 author: Hawox,morganm,Croyd
 softdepend: [Vault]
 description: >
@@ -37,6 +37,7 @@ permissions:
             uQuest.CanQuest.info: true
             uQuest.CanQuest.stats: true
             uQuest.CanQuest.done: true
+            uQuest.CanQuest.update: true
             uQuest.CanQuest.amount: true
             uQuest.CanQuest.CanDropQuest: true
     uQuest.CanQuest.give:
@@ -50,6 +51,9 @@ permissions:
         default: op
     uQuest.CanQuest.done:
         description: Turn in current quest.
+        default: op
+    uQuest.CanQuest.update:
+        description: Update gather quests and collect items.
         default: op
     uQuest.CanQuest.amount:
         description: Gives amount of quests.

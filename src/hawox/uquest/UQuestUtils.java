@@ -4,10 +4,12 @@ import hawox.uquest.enums.EnchantNames;
 
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
-
+@SuppressWarnings("deprecation")
 public class UQuestUtils {
+
 	public static int checkBlock(Block block) {
-    	int bID = block.getTypeId();
+
+		int bID = block.getTypeId();
     	int bDur = block.getData();
 		int toreturn = bDur;
     	//Checks blocks and changes them if the placed id is different then the item id.

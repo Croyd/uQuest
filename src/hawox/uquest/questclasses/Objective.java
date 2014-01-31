@@ -8,11 +8,10 @@ import hawox.uquest.UQuest;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 //import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
+@SuppressWarnings("deprecation")
 public class Objective{
 	String type;				 //Type of quest objective this will be
 	String displayname;			 //Name that will be displayed to the users
@@ -85,6 +84,7 @@ public class Objective{
 		this.displayname = displayName;
 		this.itemNeeded = itemNeeded;
 		this.objectiveName = Integer.toString(itemNeeded.getTypeId());
+		this.itemDurability = itemNeeded.getDurability();
 		this.amountNeeded = itemNeeded.getAmount();
 		this.locationNeeded = point;
 		this.locationGiveRange = give;
@@ -161,8 +161,8 @@ public class Objective{
 	 * Basicly delete items it has for now
 	 */
 	public void done(Player player){
-		if(this.itemNeeded != null)
-			removeItem(player, this.itemNeeded.getTypeId(), this.itemNeeded.getDurability(), this.amountNeeded, null);
+		//if(this.itemNeeded != null)
+			//removeItem(player, this.itemNeeded.getTypeId(), this.itemNeeded.getDurability(), this.amountNeeded, null);
 		if(this.itemID != 0) {
 			short durability = 0;
 			removeItem(player, this.itemID, durability, this.amountNeeded, this.objectiveName);
@@ -179,15 +179,15 @@ public class Objective{
 		String returnMe;
 		
 		//show the progress based on what type of quest it is
-		if(this.type.equalsIgnoreCase("gather")){
+		/*if(this.type.equalsIgnoreCase("gather")){
 			//Modified so there is no overflow like 64/10. *Croyd*
 			if(this.amountNeeded > countItems(player,this.itemNeeded.getTypeId(), this.itemNeeded.getDurability())){
 				howMuch = countItems(player,this.itemNeeded.getTypeId(), this.itemNeeded.getDurability());
 			} else {
 				howMuch = this.amountNeeded;
 			}
-		}
-		if( (this.type.equalsIgnoreCase("blockdestroy")) || this.type.equalsIgnoreCase("blockdamage") ||
+		}*/
+		if( (this.type.equalsIgnoreCase("gather") || this.type.equalsIgnoreCase("blockdestroy")) || this.type.equalsIgnoreCase("blockdamage") ||
 				this.type.equalsIgnoreCase("blockplace") || this.type.equalsIgnoreCase("kill") ||
 				this.type.equalsIgnoreCase("fish") || this.type.equalsIgnoreCase("fillbucket") ||
 				this.type.equalsIgnoreCase("move") || this.type.equalsIgnoreCase("shear") ||
@@ -230,8 +230,9 @@ public class Objective{
 		//check if it's a gather quest
 		if(this.type.equalsIgnoreCase("gather")){
 			//it's a gather mission, check the amount of the item they have and compare it to the mission reqs
-			if(countItems(player, this.itemNeeded.getTypeId(), this.itemNeeded.getDurability()) >= this.amountNeeded){
-				//player should have enough to complete the gather quest
+			//if(countItems(player, this.itemNeeded.getTypeId(), this.itemNeeded.getDurability()) >= this.amountNeeded){
+			if(questTracker >= this.amountNeeded) {
+			//player should have enough to complete the gather quest
 				return true;
 			}
 		}
@@ -243,9 +244,9 @@ public class Objective{
 				return true;
 			}
 		}
-		//check if it's a shear quest
+		//check if it's a switch quest
 		if(this.type.equalsIgnoreCase("switch")){
-			//It's a shear mission, check the amount of items switched and compare with needed.
+			//It's a switch mission, check the amount of items switched and compare with needed.
 			if(questTracker >= this.amountNeeded){
 				//player should have switched enough items.
 				return true;
@@ -253,7 +254,7 @@ public class Objective{
 		}
 		//check if it's a till quest
 		if(this.type.equalsIgnoreCase("till")){
-			//It's a shear mission, check the amount of tilling done and compare with needed.
+			//It's a till mission, check the amount of tilling done and compare with needed.
 			if(questTracker >= this.amountNeeded){
 				//player should have tilled enough land
 				return true;
@@ -261,7 +262,7 @@ public class Objective{
 		}
 		//check if it's a plant quest
 		if(this.type.equalsIgnoreCase("plant")){
-			//It's a shear mission, check the amount planted and compare with needed.
+			//It's a plant mission, check the amount planted and compare with needed.
 			if(questTracker >= this.amountNeeded){
 				//player should have planted enough items
 				return true;
@@ -269,7 +270,7 @@ public class Objective{
 		}
 		//check if it's an enchant quest
 		if(this.type.equalsIgnoreCase("enchant")){
-			//It's a shear mission, check the amount enchanted and compare with needed.
+			//It's a enchant mission, check the amount enchanted and compare with needed.
 			if(questTracker >= this.amountNeeded){
 				//player should have enchanted enough items for the quest
 				return true;
@@ -277,15 +278,15 @@ public class Objective{
 		}
 		//check if it's a fillbucket quest.
 		if(this.type.equalsIgnoreCase("fillbucket")){
-			//It's a shear mission, check the amount of entities sheared and compare with needed.
+			//It's a fillbucket mission, check the amount of entities sheared and compare with needed.
 			if(questTracker >= this.amountNeeded){
 				//player should have filled enough buckets
 				return true;
 			}
 		}
-		//check if it's a fillbucket quest.
+		//check if it's a dye quest.
 		if(this.type.equalsIgnoreCase("dye")){
-			//It's a shear mission, check the amount of entities sheared and compare with needed.
+			//It's a dye mission, check the amount of entities sheared and compare with needed.
 			if(questTracker >= this.amountNeeded){
 				//player should have filled enough buckets
 				return true;
@@ -317,7 +318,7 @@ public class Objective{
 		}
 		//check if it's a kill quest
 		if(this.type.equalsIgnoreCase("kill")){
-			//it's a blockplace mission, check the amount of the item they have and compare it to the mission reqs
+			//it's a kill mission, check the amount of kills they have and compare it to the mission reqs
 			if(questTracker >= this.amountNeeded){
 				//player should have killed enough targets
 				return true;
@@ -359,25 +360,19 @@ public class Objective{
 	}
 // Updated removeItem to remove items by durability. I give credit for this code to Pamagester *Croyd*	
 	public void removeItem(Player player, int id, short itemDurability, int amountToConsume, String enchant) {
+		int toConsume = amountToConsume;
 		HashMap<Integer, ? extends ItemStack> bag = player.getInventory().all(id);
 		for (Map.Entry<Integer, ? extends ItemStack> entry : bag.entrySet()) {
 			int index = entry.getKey();
 			ItemStack item = entry.getValue();
 			int stackAmount = item.getAmount();
-			if(enchant != null) {
-				Map<Enchantment, Integer> enchants = item.getEnchantments();
-				for (Enchantment theEnchant : enchants.keySet()) {
-					if(theEnchant.getName() == enchant){
-						
-					}
-				}
-			}
 			if( itemDurability == item.getDurability()){
-				if(stackAmount <= amountToConsume){
-					amountToConsume -= item.getAmount();
+				if(toConsume >= stackAmount) {
+					toConsume = toConsume - stackAmount;
 					player.getInventory().clear(index);
-				} else {
-					player.getInventory().setItem(index, new ItemStack(id, stackAmount - amountToConsume, itemDurability));
+				} else if(amountToConsume > 0){
+					player.getInventory().setItem(index, new ItemStack(id, stackAmount - toConsume, itemDurability));
+					toConsume = 0;
 				}
 			}
 		}

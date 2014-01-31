@@ -229,6 +229,7 @@ public class QuestLoader {
 			this.Display_Name = moneyName;
 		}
 		
+		@SuppressWarnings("deprecation")
 		public ItemStack toItem(){
 			return (new ItemStack(Integer.parseInt(Item_ID),Integer.parseInt(Amount),Short.parseShort(Durability)));
 		}
@@ -351,7 +352,7 @@ public class QuestLoader {
 		    	if(type.equalsIgnoreCase("Gather")){
 	    			ymlReward item = getymlItemFromHashMap(itemInfo);
 		    		try{
-		    			returnMe.add(new Objective("gather", item.Display_Name, item.toItem(), theLocation.toStringFromPoint(), theLocation.toStringFromGive()));
+		    			returnMe.add(new Objective("gather", item.Display_Name, item.toItem(),  theLocation.toStringFromPoint(), theLocation.toStringFromGive()));
 		    		}catch(NullPointerException npe){ 
 		    			try{
 		    				returnMe.add(new Objective("gather", item.Display_Name, item.toItem(), null, null));
