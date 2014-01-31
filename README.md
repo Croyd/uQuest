@@ -1,7 +1,7 @@
 # uQuest
 **Overly customizable quest system plugin for Bukkit by Hawox**
 
-I have taken uQuest and updated it for Bukkit 1.3.2 and added a lot of new features to it.
+I have taken uQuest and updated it for Bukkit 1.3.2(Now 1.7.2) and added a lot of new features to it.
 
 I did this all for my server but wanted to share it with everyone.
 
