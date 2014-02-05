@@ -146,15 +146,7 @@ public class Cmd_uquest implements CommandExecutor{
 						} else{
 							LoadedQuest loadedQuest = plugin.getQuestersQuest(quester);
 							if(loadedQuest.checkObjectiveType(plugin, "gather")){
-								/*System.out.println("gather");
-					        	int questLevel = 1;
-								if(plugin.isScaleQuestLevels()){
-									questLevel = plugin.getQuestInteraction().getQuestLevel(player)+1;
-					    		}
-								String message = "";
-								int amountNeed; */
 								loadedQuest.gatherObectives(plugin, player, quester);
-								
 							}else{
 								//quest is not done!
 								player.sendMessage(ChatColor.RED + "Your don't have a gather quest! Type: /uQuest info");

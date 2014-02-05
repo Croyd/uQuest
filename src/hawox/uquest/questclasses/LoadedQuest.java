@@ -89,7 +89,7 @@ public class LoadedQuest {
 	public boolean doneCheck(UQuest plugin, Player player){
 		try{
 			Quester quester = plugin.getQuestInteraction().getQuester(player);
-			gatherObectives(plugin, player, quester);
+			//gatherObectives(plugin, player, quester);
 			int doneAmount = 0;
 			for(Objective objective : this.objectives){
 				if(objective.doneCheck(player, quester.getTracker(plugin, objective.getObjectiveName())))
@@ -137,7 +137,7 @@ public class LoadedQuest {
 					questLevel = plugin.getQuestInteraction().getQuestLevel(player)+1;
 	    		}
 				int amounthave = quester.getTracker(plugin, objective.getObjectiveName());
-				int amountNeeded = objective.amountNeeded*questLevel;
+				int amountNeeded = objective.getAmountNeeded()*questLevel;
 				if(amounthave < amountNeeded) {
 					int itemcount = objective.countItems(player, Integer.parseInt(objective.getObjectiveName()), (short) objective.getItemDurability());
 					if(itemcount > 0) {
@@ -178,8 +178,8 @@ public class LoadedQuest {
 		quester.setQuestsCompleted(quester.getQuestsCompleted() + 1);
 		
 		//Consume the number of items used
-		for(Objective objective : this.objectives)
-			objective.done(player);
+		//for(Objective objective : this.objectives)
+			//objective.done(player);
 		
 		//Reward Stuff
 		for(Reward reward : this.rewards)
