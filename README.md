@@ -1,9 +1,9 @@
 # uQuest
 **Overly customizable quest system plugin for Bukkit by Hawox**
 
-I have taken uQuest and updated it for Craftbukkit 1.9.2 and added a lot of new features to it.
+I have taken uQuest and updated it for Bukkit 1.3.2(Now 1.9.2) and added a lot of new features to it.
 
-note: Right now it will not support name changing, if you change your name you'll lose your quest progress.
+note: Right now it will not support name changing, if you change your name  you'll lose your quest progress.
       Also it will not support the new blocks in 1.9 or 1.8. Working on it.
 
 I did this all for my server but wanted to share it with everyone.
@@ -14,7 +14,7 @@ I have added a lot and done some changes, so decided not to fork it and instead 
 
 Also need to give credit to **morganm** for putting in **Vault** support for Permissions and Economies.
 
-Now updated to 1.7.2
+Now updated to 1.9.2
 
 Here is the link for the jar: [uQuest Jar](https://dl.dropboxusercontent.com/u/58005429/uQuest.jar)
 
