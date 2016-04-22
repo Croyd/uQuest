@@ -14,6 +14,7 @@ Also need to give credit to **morganm** for putting in **Vault** support for Per
 Now updated to 1.9.2
 
 Here is the link for the spigot build jar: [uQuest Spigot Jar](https://dl.dropboxusercontent.com/u/58005429/uQuestSpigot/uQuest.jar)
+
 Here is the link for the craftbukkit build jar: [uQuest Bukkit Jar](https://dl.dropboxusercontent.com/u/58005429/uQuestBukkit/uQuest.jar)
 
 note: Right now it will not support name changing, if you change your name  you'll lose your quest progress.
