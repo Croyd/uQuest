@@ -17,6 +17,8 @@ Here is the link for the spigot build jar: [uQuest Spigot Jar](https://dl.dropbo
 
 Here is the link for the craftbukkit build jar: [uQuest Bukkit Jar](https://dl.dropboxusercontent.com/u/58005429/uQuestBukkit/uQuest.jar)
 
+Also build with Java 7
+
 note: Right now it will not support name changing, if you change your name  you'll lose your quest progress.
       Also it will not support the new blocks in 1.9 or 1.8. Working on it.
 
