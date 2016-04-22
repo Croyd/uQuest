@@ -1,10 +1,7 @@
 # uQuest
 **Overly customizable quest system plugin for Bukkit by Hawox**
 
-I have taken uQuest and updated it for Bukkit 1.3.2(Now 1.9.2) and added a lot of new features to it.
-
-note: Right now it will not support name changing, if you change your name  you'll lose your quest progress.
-      Also it will not support the new blocks in 1.9 or 1.8. Working on it.
+I have taken uQuest and updated and built it for Bukkit 1.9.2(Also Spigot 1.9.2) and added a lot of new features to it.
 
 I did this all for my server but wanted to share it with everyone.
 
@@ -16,7 +13,11 @@ Also need to give credit to **morganm** for putting in **Vault** support for Per
 
 Now updated to 1.9.2
 
-Here is the link for the jar: [uQuest Jar](https://dl.dropboxusercontent.com/u/58005429/uQuest.jar)
+Here is the link for the spigot build jar: [uQuest Spigot Jar](https://dl.dropboxusercontent.com/u/58005429/uQuestSpigot/uQuest.jar)
+Here is the link for the craftbukkit build jar: [uQuest Bukkit Jar](https://dl.dropboxusercontent.com/u/58005429/uQuestBukkit/uQuest.jar)
+
+note: Right now it will not support name changing, if you change your name  you'll lose your quest progress.
+      Also it will not support the new blocks in 1.9 or 1.8. Working on it.
 
 ##Plugin Info
 [Commands & Permissions](https://github.com/Croyd/uQuest/wiki/Commands-&-Permissions)
